@@ -9,10 +9,10 @@
 $m = new Memcached();
 $m->addServers(
         array(
-            array('127.0.0.1', 11211, 50),
-            array('127.0.0.1', 11212, 50),
-            array('127.0.0.1', 11213, 50),
-            array('127.0.0.1', 11214, 50),
+            array('127.0.0.1', 11211),
+            array('127.0.0.1', 11212),
+            array('127.0.0.1', 11213),
+            array('127.0.0.1', 11214),
         )
 );
 
@@ -34,9 +34,11 @@ $m->addServers(
 //$mysqli->close();
 //var_dump($m->getStats());
 //$arr = array();
-//for($i=1;$i<=1000000;$i++){
-//    if(empty($m->get('UID_'.$i))){
-//        $arr[] = 'UID_'.$i;
+//$mc  = microtime(true);
+//for ($i = 1; $i <= 1000000; $i++) {
+//    if (empty($m->get('UID_' . $i))) {
+//        $arr[] = 'UID_' . $i;
 //    }
 //}
-//var_dump($m->get('UID_10'));
+//var_dump($arr, microtime(true) - $mc);
+//var_dump($m->get('UID_1000'));
