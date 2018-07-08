@@ -5,7 +5,7 @@
  * CreateTime: 2018-6-20 14:07:22
  * Description: 
  */
-$mysqli = new mysqli('127.0.0.1', 'test', 'test', 'test');
+$mysqli = new mysqli('192.168.0.102', 'test', 'test', 'test');
 
 /* ----------------模拟数据写入数据表--------------------- */
 $setNum = 1000000; //设置插入数据行数

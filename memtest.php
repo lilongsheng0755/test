@@ -9,16 +9,16 @@
 $m = new Memcached();
 $m->addServers(
         array(
-            array('127.0.0.1', 11211),
-            array('127.0.0.1', 11212),
-            array('127.0.0.1', 11213),
-            array('127.0.0.1', 11214),
+            array('192.168.0.102', 11211),
+//            array('192.168.0.102', 11212),
+//            array('192.168.0.102', 11213),
+//            array('192.168.0.102', 11214),
         )
 );
 
 
 /* ------------把数据写入缓存中--------------- */
-//$mysqli  = new mysqli('127.0.0.1', 'test', 'test', 'test');
+//$mysqli  = new mysqli('192.168.0.102', 'test', 'test', 'test');
 //$showNum = 1000;
 //$mc      = microtime(true);
 //for ($page = 1; $page <= 1000; $page++) {
@@ -33,12 +33,12 @@ $m->addServers(
 //
 //$mysqli->close();
 //var_dump($m->getStats());
-//$arr = array();
-//$mc  = microtime(true);
-//for ($i = 1; $i <= 1000000; $i++) {
-//    if (empty($m->get('UID_' . $i))) {
-//        $arr[] = 'UID_' . $i;
-//    }
-//}
-//var_dump($arr, microtime(true) - $mc);
-//var_dump($m->get('UID_1000'));
+$arr = array();
+$mc  = microtime(true);
+for ($i = 1; $i <= 1000000; $i++) {
+    if (empty($m->get('UID_' . $i))) {
+        $arr[] = 'UID_' . $i;
+    }
+}
+var_dump($arr, microtime(true) - $mc);
+var_dump($m->get('UID_1000'));
