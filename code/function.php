@@ -9,7 +9,7 @@ function clearCookie($cookie) {
     setcookie($cookie, '', time() - 3600,'/');
 }
 
-function clearSession($session_key) {
+function clearSession() {
     //第一步
     session_start();
     //第二步
