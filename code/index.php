@@ -1,25 +1,12 @@
-<?php
-
-/**
- * Author: skylong
- * CreateTime: 2018-6-21 21:43:31
- * Description: 
- */
-//phpinfo();
-$host = '192.168.0.102';
-$username = 'test';
-$passwd = 'test';
-$dbname = 'test';
-$port = 3306;
-$mysqli = new mysqli($host, $username, $passwd, $dbname);
-if ($mysqli->connect_errno) {
-    printf("Connect failed: %s\n", $mysqli->connect_error);
-    exit();
-}
-
-$mysqli->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
-
-$mysqli->query("SELECT title FROM test");
-$mysqli->commit();
-
-$mysqli->close();
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>验证码校验</title>
+    </head>
+    <body>
+        <form action="http://192.168.0.103:88/service.php">
+            <input type="input" name="vcode"><image src="http://192.168.0.103:88/service.php">
+            <button type="submit">提交</button>
+        </form>
+    </body>
+</html>
