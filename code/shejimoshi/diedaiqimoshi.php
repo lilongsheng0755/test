@@ -22,19 +22,19 @@ class AllUser implements Iterator {
         return Factory::getUser($id);
     }
 
-    public function key(): \scalar {
+    public function key()  {
         return $this->index;
     }
 
-    public function next(): void {
+    public function next()  {
         return $this->index++;
     }
 
-    public function rewind(): void {  //重置
+    public function rewind() {  //重置
         $this->index = 0;
     }
 
-    public function valid(): bool {
+    public function valid() {
         return $this->index < count($this->ids);
     }
 
