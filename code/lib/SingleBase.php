@@ -16,7 +16,8 @@ abstract class SingleBase {
 
     /**
      * 单例模式实例化
-     * 
+     *
+     * @param array $params
      * @return object
      */
     public static function getInstance(...$params) {
