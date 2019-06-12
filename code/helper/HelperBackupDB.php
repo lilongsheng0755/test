@@ -132,7 +132,7 @@ class HelperBackupDB extends SingleBase {
         $head .= "-- {$sys_info['os']}" . PHP_EOL;
         $head .= "-- PHP VERSION : {$sys_info['php_ver']}" . PHP_EOL;
         $head .= "-- MYSQL VERSION : {$version}" . PHP_EOL;
-        $head .= "-- Date {$sys_info['date']}" . PHP_EOL;
+        $head .= "-- Date {$sys_info['date']}" . PHP_EOL . PHP_EOL;
         return $head;
     }
 
@@ -183,6 +183,10 @@ class HelperBackupDB extends SingleBase {
         foreach ($tables as $table) {
             // 获取数据表定义
             if (!$this->backup_type) {
+                $str = '';
+                $str .= "-- --------------------" . PHP_EOL;
+                $str .= "-- Create Table of {$table}" . PHP_EOL;
+                $str .= "-- --------------------" . PHP_EOL;
                 $query = "SHOW CREATE TABLE {$table}";
                 $result = $this->conn->query($query);
                 if (!$result instanceof \mysqli_result) {
@@ -190,7 +194,7 @@ class HelperBackupDB extends SingleBase {
                     continue;
                 }
                 $row = $result->fetch_array(MYSQLI_NUM);
-                $str = "{$row[1]};" . PHP_EOL;     // 数据表定义
+                $str .= "{$row[1]};" . PHP_EOL . PHP_EOL;     // 数据表定义
                 fwrite($fh, $str);
             }
             if ($this->backup_type != 2) {
@@ -202,11 +206,13 @@ class HelperBackupDB extends SingleBase {
                 // 获取数据表的数据
                 $show_num = 10000;
                 $page = 1;
+                $break = false;
                 while (1) {
                     $offset = ($page - 1) * $show_num;
                     if ($tbl_custom) {
                         $query = "SELECT * FROM {$table} ORDER BY {$tbl_custom[$table]} LIMIT {$offset},{$show_num}";
                     } else {
+                        $break = true;
                         $query = "SELECT * FROM {$table} LIMIT 10000";
                     }
 
@@ -219,6 +225,13 @@ class HelperBackupDB extends SingleBase {
                     if (!$row && !is_array($row)) {
                         break;
                     }
+
+                    if ($page !== 1) {
+                        $values = $this->handleValues($row);
+                        $str = "({$values})," . PHP_EOL;
+                        fwrite($fh, $str);
+                    }
+
                     if ($page === 1) {
                         $field = $this->handleFields($row);
                         $values = $this->handleValues($row);
@@ -234,12 +247,15 @@ class HelperBackupDB extends SingleBase {
                         fwrite($fh, $str);
                     }
                     $page++;
+                    if ($break) {
+                        break;
+                    }
                 }
-                $end_values && fwrite($fh, $end_values);
-
+                $end_values && fwrite($fh, $end_values . PHP_EOL . PHP_EOL);
             }
             $this->backup_result['success'][] = $table;
         }
         return fclose($fh);
     }
+
 }
