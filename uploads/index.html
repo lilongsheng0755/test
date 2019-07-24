@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>实现断点续传</title>
+    <meta charset="utf-8">
+    <script src="./jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="./BlockUploads.js"></script>
+</head>
+
+<body>
+    <input type="file" name="uploadFile" id="upload-file" onchange="upload.init()">
+    <progress id="progress" max="100" value="0"></progress>
+</body>
+<script type="text/javascript">
+    var uploadConfig = {
+        "uploadMode": "javascript",
+        "uploadFileElementId": "upload-file",
+        "uploadFileFeild ": "uploadFile",
+        "uploadUrl": "upload.php",
+        "chunkSize": 1024 * 1024,
+        "getUploadSizeUrl": "fileSize.php",
+        "ProgressElementId": "progress"
+    };
+    var upload = new BlockUploads(uploadConfig);
+</script>
+
+</html>
