@@ -13,7 +13,7 @@
     <progress id="progress" max="100" value="0"></progress>
 </body>
 <script type="text/javascript">
-    var uploadConfig = {
+    var upload = new BlockUploads({
         "uploadMode": "javascript",
         "uploadFileElementId": "upload-file",
         "uploadFileFeild ": "uploadFile",
@@ -21,8 +21,7 @@
         "chunkSize": 1024 * 1024,
         "getUploadSizeUrl": "fileSize.php",
         "ProgressElementId": "progress"
-    };
-    var upload = new BlockUploads(uploadConfig);
+    });
 </script>
 
 </html>
