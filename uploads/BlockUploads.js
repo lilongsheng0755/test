@@ -5,7 +5,7 @@
  */
 
 /**
- * 上传类型构造方法
+ * 上传类构造方法
  * 
  * @param {type} upload
  * @returns {BlockUploads}
