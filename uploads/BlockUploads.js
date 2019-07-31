@@ -50,6 +50,11 @@ function BlockUploads(upload) {
     this.progressElementId = upload.ProgressElementId || 'progress';
 
     /**
+     * 是否覆盖上传
+     */
+    this.isCoverUpload = upload.isCoverUpload || 1;
+
+    /**
      * 初始化上传文件
      * 检测文件是否上传了部分，实现断点续传
      * 
@@ -62,6 +67,7 @@ function BlockUploads(upload) {
         // 设置表单数据
         let fd = new FormData();
         fd.append('fileName', fileObj.name);
+        fd.append('isCoverUpload', this.isCoverUpload);
 
         if (uploadObj.uploadMode !== 'jquery') {
             let xhr = new XMLHttpRequest();
