@@ -54,7 +54,7 @@ class MimeType {
             self::MIME_TYPE_TXT  => 'text/plain',
             self::MIME_TYPE_ZIP  => 'application/zip',
         ];
-        return isset($mime_type[$type]) ? $mime_type[$type] : $mime_type[self::MIME_TYPE_ZIP];
+        return isset($mime_type[$type]) ? $mime_type[$type] : $mime_type[self::MIME_TYPE_TXT];
     }
 
 }
