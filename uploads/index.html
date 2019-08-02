@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <input type="file" name="uploadFile" id="upload-file" onchange="upload.init()" accept="image/jpeg,image/gif,application/msword">
+    <input type="file" name="uploadFile" id="upload-file" onchange="upload.init()" accept="image/jpeg,image/gif,application/zip">
     <progress id="progress" max="100" value="0"></progress>
 </body>
 <script type="text/javascript">
@@ -20,7 +20,8 @@
         "uploadUrl": "upload.php",
         "chunkSize": 1024 * 1024,
         "getUploadSizeUrl": "fileSize.php",
-        "ProgressElementId": "progress"
+        "ProgressElementId": "progress",
+        "accessType":"jpg,zip,gif"
     });
 </script>
 

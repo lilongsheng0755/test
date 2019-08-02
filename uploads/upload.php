@@ -6,6 +6,19 @@ if ($_FILES['uploadFile']['error'] != 0) {
     exit;
 }
 
+// 校验文件名是否存在
+if (!$_POST['fileName']) {
+    header('HTTP/1.1 504 Gateway Time-out');
+    exit;
+}
+
+// 检测上传文件类型
+$ext = (string) @pathinfo($_POST['fileName'], PATHINFO_EXTENSION);
+if (!in_array($ext, ['jpg', 'zip', 'gif'])) {
+    header('HTTP/1.1 504 Gateway Time-out');
+    exit;
+}
+
 // 追加文件块
 $file_path = 'files/' . $_POST['fileName'];
 while (!$fh = @fopen($file_path, 'a+')) {

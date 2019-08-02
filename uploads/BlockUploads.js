@@ -55,6 +55,11 @@ function BlockUploads(upload) {
     this.isCoverUpload = upload.isCoverUpload || 1;
 
     /**
+     * 允许上传文件类型
+     */
+    this.accessType = upload.accessType || '*';
+
+    /**
      * 初始化上传文件
      * 检测文件是否上传了部分，实现断点续传
      * 
@@ -62,6 +67,14 @@ function BlockUploads(upload) {
      */
     this.init = function () {
         let fileObj = document.getElementById(this.uploadFileElementId).files[0];
+        let index = fileObj.name.lastIndexOf(".");
+        let ext = fileObj.name.substr(index+1);
+
+        if(this.accessType != '*' && this.accessType.indexOf(ext) == -1){
+            alert('上传文件类型错误，允许上传类型：'+this.accessType);
+            return false;
+        }
+
         let uploadObj = this;
 
         // 设置表单数据
@@ -123,6 +136,7 @@ function BlockUploads(upload) {
         let fileObj = document.getElementById(this.uploadFileElementId).files[0];
         let uploadObj = this;
         if (startSize >= fileObj.size) {
+            alert('上传完毕！');
             return true;
         }
 
