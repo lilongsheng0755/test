@@ -9,12 +9,12 @@ class Proxy implements IUserProxy {
 
     public function getUserName($id) {
         $db = Factory::getDatabase('slave');
-        $db->query("select name from user where id={$id} limit 1");
+        $db->query("select name from User where id={$id} limit 1");
     }
 
     public function setUserName($id, $name) {
          $db = Factory::getDatabase('master');
-         $db->query("update user set name='{$name}' where id={$id} limit 1");
+         $db->query("update User set name='{$name}' where id={$id} limit 1");
     }
 
 }
