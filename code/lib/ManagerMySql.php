@@ -43,6 +43,13 @@ class ManagerMySql {
     private $diff_table = [];
 
     /**
+     * 字段属性差异
+     *
+     * @var array
+     */
+    private $diff_field_attr = [];
+
+    /**
      * 单利模式实例化
      * 
      * @param \mysqli $mysqli
@@ -59,20 +66,30 @@ class ManagerMySql {
      * 初始化检测是否为有效mysqli
      * 
      * @param \mysqli $mysqli mysqli实例
-     * @param string $db_name 数据库名称
      * @return \mysqli
      */
-    private function __construct($mysqli, $db_name = '') {
+    private function __construct($mysqli) {
         if (!$mysqli instanceof \mysqli) {
             die('not found obj from mysqli!'); // 输出到控制台
         }
-
         $this->mysqli = $mysqli;
+        return $this->mysqli;
+    }
 
+    public function Contrasting($db_name, $db_defined_config) {
+        
+    }
+
+    /**
+     * 数据库是否存在
+     * 
+     * @param string $db_name 数据库名
+     * @return boolean|ManagerMySql
+     */
+    public function dbIsExists($db_name) {
         if (!$db_name = trim($db_name)) {
             die('db name is not empty!'); // 输出到控制台
         }
-
         $mysqli_result = $this->mysqli->query('SHOW DATABASES');
         $flag = false;
         while ($row = $mysqli_result->fetch_assoc()) {
@@ -82,33 +99,30 @@ class ManagerMySql {
             }
         }
         if (!$flag) {
-            die("Database `{$db_name}` does not exist!"); // 输出到控制台
+            $this->diff_db[] = $db_name;
+            return $flag;
         }
-
+        $this->select_db = $db_name;
         $this->mysqli->select_db($db_name);
-        return $this->mysqli;
+        return $this;
     }
 
     /**
-     * 数据表是否存在
+     * 得到当前数据库所有的表
      * 
-     * @param string $tbl_name 表名称
-     * @return boolean
+     * @param string $db_name 数据库名称
+     * @return array
      */
-    public function tableIsExists($tbl_name) {
-        if (!$tbl_name = trim($tbl_name)) {
-            die('table name is not empty!'); // 输出到控制台
+    public function allTableFromDB($db_name) {
+        if (!$db_name = trim($db_name)) {
+            die('db name is not empty!'); // 输出到控制台
         }
-
         $mysqli_result = $this->mysqli->query('SHOW TABLES');
-        $flag = false;
+        $ret = [];
         while ($row = $mysqli_result->fetch_assoc()) {
-            if ($row['Tables_in_test'] == $tbl_name) {
-                $flag = true;
-                break;
-            }
+            $ret[] = $row['Tables_in_test'];
         }
-        return $flag;
+        return $ret;
     }
 
 }
