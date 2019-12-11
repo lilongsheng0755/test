@@ -17,15 +17,14 @@ abstract class SingleBase {
     /**
      * 单例模式实例化
      *
-     * @param array $params
      * @return object
      */
-    public static function getInstance(...$params) {
-        $class = get_called_class();
-        if (!isset(self::$instance[$class]) || !self::$instance[$class] instanceof $class) {
-            self::$instance[$class] = new $class(...$params);
+    public static function getInstance() {
+        $key = md5(static::class);
+        if (!isset(self::$instance[$key]) || !self::$instance[$key] instanceof static) {
+            self::$instance[$key] = new static();
         }
-        return self::$instance[$class];
+        return self::$instance[$key];
     }
 
 }
