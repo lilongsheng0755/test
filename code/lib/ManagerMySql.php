@@ -12,8 +12,7 @@
  * @author lilongsheng
  */
 class ManagerMySql {
-    // 创建数据库：CREATE DATABASE `test` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
+    
     /**
      * ManagerMySql实例
      * 
@@ -74,10 +73,6 @@ class ManagerMySql {
         }
         $this->mysqli = $mysqli;
         return $this->mysqli;
-    }
-
-    public function Contrasting($db_name, $db_defined_config) {
-        
     }
 
     /**
